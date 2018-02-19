@@ -28,3 +28,4 @@ method=select_in
 section=commands
 caption=Brackets Hilite\Config
 method=config
+menu=o

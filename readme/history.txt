@@ -1,4 +1,9 @@
 
+2018.02.19
+* renamed config file, it has new sections
++ config file section [brackets_file_types] to set brackets per file extension
++ menuitem Config moved to Options/ Settings-plugins
+
 2016.07.14
 + cmd "Select to bracket, inside"
 
