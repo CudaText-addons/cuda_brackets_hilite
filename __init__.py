@@ -99,6 +99,23 @@ class Command:
             chars = get_chars()
             if not chars: return
 
+            line = ed.get_text_line(y)
+            if line is None: return
+
+            if not 0<=x<len(line):
+                if x>0 and x==len(line) and line[x-1] in '()[]{}':
+                    x -= 1
+                else:
+                    return
+
+            #check caret is on bracket
+            if not line[x] in '()[]{}':
+                #allow caret after bracket
+                if x>0 and line[x-1] in '()[]{}':
+                    x -= 1
+                else:
+                    return
+
             res = find_matching_bracket(ed, x, y, chars)
             if res is None:
                 return
