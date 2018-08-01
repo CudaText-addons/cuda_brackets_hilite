@@ -1,4 +1,7 @@
 
+2018.08.01
++ added option "cannot_use_sel" to config file
+
 2018.03.04
 + allow caret position after bracket too
 

@@ -1,11 +1,11 @@
 import os
 import shutil
 from cudatext import *
-from cudax_lib import html_color_to_int
+from cudax_lib import html_color_to_int, int_to_html_color
 from .proc_brackets import *
+from . import opt
 
 MARKTAG = 10 #uniq value for all markers plugins
-CANNOT_USE_SEL = False #cannot work if selection
 
 NAME_INI = 'cuda_brackets_hilite_.ini'
 ini_app = os.path.join(app_path(APP_DIR_SETTINGS), NAME_INI)
@@ -14,11 +14,19 @@ ini_def = os.path.join(os.path.dirname(__file__), NAME_INI)
 if not os.path.isfile(ini_app) and os.path.isfile(ini_def):
     shutil.copyfile(ini_def, ini_app)
 
-COLOR_FONT = html_color_to_int(ini_read(ini_app, 'color', 'fore', '#000000'))
-COLOR_BG = html_color_to_int(ini_read(ini_app, 'color', 'back', '#80c080'))
+def str_to_bool(s): return s=='1'
+def bool_to_str(b): return '1' if b else '0'
+
 
 brackets_lexers = {}
 brackets_types = {}
+
+
+def options_load():
+
+    opt.cannot_use_sel = str_to_bool(ini_read(ini_app, 'op', 'cannot_use_sel', '0'))
+    opt.color_font = html_color_to_int(ini_read(ini_app, 'color', 'fore', '#000000'))
+    opt.color_back = html_color_to_int(ini_read(ini_app, 'color', 'back', '#80c080'))
 
 
 def get_chars_filetype():
@@ -42,8 +50,7 @@ def get_chars_filetype():
 
 
 def get_chars():
-    global prev_lexer
-    global prev_chars
+
     global brackets_lexers
     global brackets_types
 
@@ -73,13 +80,23 @@ def get_chars():
 class Command:
     entered=False
 
+    def __init__(self):
+
+        options_load()
+
     def config(self):
+
+        ini_write(ini_app, 'op', 'cannot_use_sel', bool_to_str(opt.cannot_use_sel))
+        ini_write(ini_app, 'color', 'fore', int_to_html_color(opt.color_font))
+        ini_write(ini_app, 'color', 'back', int_to_html_color(opt.color_back))
+
         if os.path.isfile(ini_app):
             file_open(ini_app)
         else:
-            msg_box('Cannot find config: '+ini_app, MB_OK)
+            msg_status('Cannot find config: '+ini_app)
 
     def on_caret(self, ed_self):
+
         if self.entered: return
         self.entered=True
 
@@ -92,7 +109,7 @@ class Command:
             if len(carets)!=1:
                 return
             x, y, x1, y1 = carets[0]
-            if CANNOT_USE_SEL:
+            if opt.cannot_use_sel:
                 if x1>=0:
                     return
 
@@ -121,19 +138,25 @@ class Command:
                 return
             x1, y1 = res
 
-            ed.attr(MARKERS_ADD, MARKTAG, x, y, 1, COLOR_FONT, COLOR_BG)
-            ed.attr(MARKERS_ADD, MARKTAG, x1, y1, 1, COLOR_FONT, COLOR_BG)
+            ed.attr(MARKERS_ADD, MARKTAG, x, y, 1, opt.color_font, opt.color_back)
+            ed.attr(MARKERS_ADD, MARKTAG, x1, y1, 1, opt.color_font, opt.color_back)
         finally:
             self.entered=False
 
     def jump(self):
+
         self.do_find(True)
+
     def select(self):
+
         self.do_find(False)
+
     def select_in(self):
+
         self.do_find(False, True)
 
     def do_find(self, is_jump, select_inside=False):
+
         carets = ed.get_carets()
         if len(carets)!=1:
             msg_status('Cannot go to bracket if multi-carets')
