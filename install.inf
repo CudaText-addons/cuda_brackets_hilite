@@ -1,6 +1,6 @@
 [info]
 title=Brackets Hilite
-desc=Highlights pair brackets for caret position, when caret moves. Brackets are configurable per lexer.
+desc=Highlights pair brackets for caret position, when caret moves. Gives command "Go to pair bracket". Brackets are configurable per lexer or file-extension.
 type=cudatext-plugin
 subdir=cuda_brackets_hilite
 homepage=https://github.com/CudaText-addons/cuda_brackets_hilite
