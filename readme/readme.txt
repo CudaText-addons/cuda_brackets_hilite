@@ -13,14 +13,14 @@ Config file
 -----------
 
 - Section [brackers_lexers]
-  Bracket pairs, listed per lexer, e.g.
+  Bracket pairs, listed per lexer. For ex:
     PHP=()[]{}
     Go=() 
   Key "default": value for all not mentioned lexers.
 
 - Section [brackets_file_types]
-  Bracket pairs, listed per file extension (with dot, lower case), e.g. 
-  .ini=[]()
+  Bracket pairs, listed per file extension (with dot, lower case). For ex: 
+    .cuda-snippet=[]()
   Section is used only for files without lexer.
 
 - Section [color]
