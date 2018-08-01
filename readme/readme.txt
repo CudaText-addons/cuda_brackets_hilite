@@ -12,7 +12,7 @@ Item in Options / Settings-plugins:
 Config file
 -----------
 
-- Section [brackers_lexers]
+- Section [brackets_lexers]
   Bracket pairs, listed per lexer. For ex:
     PHP=()[]{}
     Go=() 
