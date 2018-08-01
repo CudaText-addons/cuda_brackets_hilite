@@ -25,6 +25,7 @@ brackets_types = {}
 def options_load():
 
     opt.cannot_use_sel = str_to_bool(ini_read(ini_app, 'op', 'cannot_use_sel', '0'))
+    opt.max_lines = int(ini_read(ini_app, 'op', 'max_line_count', str(opt.max_lines)))
     opt.color_font = html_color_to_int(ini_read(ini_app, 'color', 'fore', '#000000'))
     opt.color_back = html_color_to_int(ini_read(ini_app, 'color', 'back', '#80c080'))
 
@@ -87,6 +88,7 @@ class Command:
     def config(self):
 
         ini_write(ini_app, 'op', 'cannot_use_sel', bool_to_str(opt.cannot_use_sel))
+        ini_write(ini_app, 'op', 'max_line_count', str(opt.max_lines))
         ini_write(ini_app, 'color', 'fore', int_to_html_color(opt.color_font))
         ini_write(ini_app, 'color', 'back', int_to_html_color(opt.color_back))
 
@@ -99,6 +101,10 @@ class Command:
 
         if self.entered: return
         self.entered=True
+
+        if opt.max_lines>0:
+            if ed.get_line_count()>opt.max_lines:
+                return
 
         try:
             marks = ed.attr(MARKERS_GET)
