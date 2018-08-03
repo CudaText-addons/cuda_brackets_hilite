@@ -1,7 +1,7 @@
 
 2018.08.01
-+ added option "cannot_use_sel" to config file
-+ added option "max_line_count" to disable plugin in huge files
++ added option: [op] cannot_use_sel
++ added option: [op] max_line_count
 
 2018.03.04
 + allow caret position after bracket too

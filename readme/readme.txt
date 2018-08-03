@@ -29,7 +29,8 @@ Config file
   Use "Color Picker" plugin to edit HTML color values here.
 
 - Section [op]
-  Other options. Plugin saves default values here, so no need to mention them.  
+  cannot_use_sel (0/1): disable plugin work if selection exists.
+  max_line_count (0/1): max count of lines in a file, when plugin work is enabled.
 
 
 Author: Alexey (CudaText)
