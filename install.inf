@@ -4,6 +4,7 @@ desc=Highlights pair brackets for caret position, when caret moves. Gives comman
 type=cudatext-plugin
 subdir=cuda_brackets_hilite
 homepage=https://github.com/CudaText-addons/cuda_brackets_hilite
+api=1.0.256
 
 [item1]
 section=events
