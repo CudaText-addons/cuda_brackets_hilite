@@ -1,4 +1,7 @@
 
+2018.09.26
++ use new CudaText API: show gutter decorations, ie brackes on gutter
+
 2018.08.01
 + added option: [op] cannot_use_sel
 + added option: [op] max_line_count
