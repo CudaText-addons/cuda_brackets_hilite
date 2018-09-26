@@ -6,6 +6,7 @@ from .proc_brackets import *
 from . import opt
 
 MARKTAG = 10 #uniq value for all markers plugins
+DECORTAG = 10 #uniq value for all decor plugins
 
 NAME_INI = 'cuda_brackets_hilite_.ini'
 ini_app = os.path.join(app_path(APP_DIR_SETTINGS), NAME_INI)
@@ -20,6 +21,14 @@ def bool_to_str(b): return '1' if b else '0'
 
 brackets_lexers = {}
 brackets_types = {}
+
+
+color_char = 0xFF0000
+d = app_proc(PROC_THEME_SYNTAX_DATA_GET, '')
+for i in d:
+    if i['name']=='Symbol':
+        color_char = i['color_font']
+        break
 
 
 def options_load():
@@ -110,6 +119,7 @@ class Command:
             marks = ed.attr(MARKERS_GET)
             if marks:
                 ed.attr(MARKERS_DELETE_BY_TAG, MARKTAG)
+                ed.decor(DECOR_DELETE_BY_TAG, tag=DECORTAG)
 
             carets = ed.get_carets()
             if len(carets)!=1:
@@ -142,10 +152,17 @@ class Command:
             res = find_matching_bracket(ed, x, y, chars)
             if res is None:
                 return
-            x1, y1 = res
+            x1, y1, char1, char2 = res
 
             ed.attr(MARKERS_ADD, MARKTAG, x, y, 1, opt.color_font, opt.color_back)
             ed.attr(MARKERS_ADD, MARKTAG, x1, y1, 1, opt.color_font, opt.color_back)
+
+            if y==y1:
+                ed.decor(DECOR_SET, y, tag=DECORTAG, text=(char1+char2 if x1>x else char2+char1), color=color_char, bold=True, auto_del=True)
+            else:
+                ed.decor(DECOR_SET, y, tag=DECORTAG, text=char1, color=color_char, bold=True, auto_del=True)
+                ed.decor(DECOR_SET, y1, tag=DECORTAG, text=char2, color=color_char, bold=True, auto_del=True)
+
         finally:
             self.entered=False
 

@@ -29,7 +29,7 @@ def find_matching_bracket(ed, from_x, from_y, chars):
             elif ch_now==ch_end:
                 cnt-=1
                 if cnt==0:
-                    return (pos, to_y)
+                    return (pos, to_y, ch, ch_end)
                     
         if down:
             to_y+=1
