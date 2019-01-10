@@ -197,7 +197,7 @@ class Command:
         if res is None:
             msg_status('Cannot find pair bracket')
             return
-        x1, y1 = res
+        x1, y1, _, __ = res
 
         if is_jump:
             ed.set_caret(x1, y1)

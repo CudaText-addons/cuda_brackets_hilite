@@ -1,4 +1,7 @@
 
+2019.01.10
+- fix: crash on commands
+
 2018.09.26
 + used new CudaText API: gutter decorations, ie show current brackets on gutter
 
