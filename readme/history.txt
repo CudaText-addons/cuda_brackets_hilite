@@ -1,6 +1,6 @@
 
 2019.01.16
-+ add: improved search to find brackets only of "same kind" - if source bracket was in code/comment/string, then pair bracket must be of the same kind
++ add: improved search to skip unneeded brackets in comments/strings - if source bracket was in code/comment/string, then pair bracket must be of the same kind
 
 2019.01.10
 - fix: crash on commands
