@@ -1,6 +1,10 @@
 
-#example of chars: "()[]{}"
 def find_matching_bracket(ed, from_x, from_y, chars):
+    '''
+    Example of chars: "()[]{}".
+    Direction of search (up/down) is auto-detected from "chars".
+    Gets tuple (pos_x, pos_y, char_here, char_pair) or None if not found.
+    '''
     line = ed.get_text_line(from_y)
     if line is None: return
     if not from_x in range(len(line)): return
