@@ -119,6 +119,9 @@ class Command:
             marks = ed.attr(MARKERS_GET)
             if marks:
                 ed.attr(MARKERS_DELETE_BY_TAG, MARKTAG)
+
+            decors = ed.decor(DECOR_GET_ALL)
+            if decors:
                 ed.decor(DECOR_DELETE_BY_TAG, tag=DECORTAG)
 
             carets = ed.get_carets()
