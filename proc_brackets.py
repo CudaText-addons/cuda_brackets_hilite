@@ -1,3 +1,13 @@
+import cudatext as app
+
+def find_token_type(ed, x, y):
+
+    tokens = ed.get_token(app.TOKEN_LIST_SUB, y, y)
+    if tokens:
+        for t in tokens:
+            if t['x1']<=x<t['x2']:
+                return t['style']
+    return ''
 
 def find_matching_bracket(ed, from_x, from_y, chars):
     '''
@@ -22,12 +32,16 @@ def find_matching_bracket(ed, from_x, from_y, chars):
     to_x = from_x
     to_y = from_y
     cnt = 0
+    type_from = find_token_type(ed, from_x, from_y)
     #print('find "%s" from (%d,%d)'%(ch,to_x,to_y))
     
     while True:
         for pos in (range(to_x, len(line)) if down else
                     range(to_x, -1, -1)):
             ch_now = line[pos]
+            # ignore tokens of different type (in comments/strings)
+            if find_token_type(ed, pos, to_y)!=type_from:
+                continue
             if ch_now==ch:
                 cnt+=1
             elif ch_now==ch_end:
