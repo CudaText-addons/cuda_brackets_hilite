@@ -1,4 +1,7 @@
 
+2019.01.18
++ add: improved speed
+
 2019.01.16
 + add: improved search to skip unneeded brackets in comments/strings - if source bracket was in code/comment/string, then pair bracket must be of the same kind
 - fix: after Del command incorrect gutter decorations may be left
