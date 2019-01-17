@@ -1,20 +1,26 @@
 import cudatext as app
 
-def find_token_type(ed, x, y):
-
-    tokens = ed.get_token(app.TOKEN_LIST_SUB, y, y)
-    if tokens:
-        for t in tokens:
-            if t['x1']<=x<t['x2']:
-                return t['style']
-    return ''
-
 def find_matching_bracket(ed, from_x, from_y, chars):
     '''
     Example of chars: "()[]{}".
     Direction of search (up/down) is auto-detected from "chars".
     Gets tuple (pos_x, pos_y, char_here, char_pair) or None if not found.
     '''
+    cache = {}
+
+    def find_token_type(x, y):
+
+        tokens = cache.get(y)
+        if tokens is None:
+            tokens = ed.get_token(app.TOKEN_LIST_SUB, y, y)
+            cache[y] = tokens
+            
+        if tokens:
+            for t in tokens:
+                if t['x1']<=x<t['x2']:
+                    return t['style']
+        return ''
+
     line = ed.get_text_line(from_y)
     if line is None: return
     if not from_x in range(len(line)): return
@@ -32,7 +38,7 @@ def find_matching_bracket(ed, from_x, from_y, chars):
     to_x = from_x
     to_y = from_y
     cnt = 0
-    type_from = find_token_type(ed, from_x, from_y)
+    type_from = find_token_type(from_x, from_y)
     #print('find "%s" from (%d,%d)'%(ch,to_x,to_y))
     
     while True:
@@ -40,7 +46,7 @@ def find_matching_bracket(ed, from_x, from_y, chars):
                     range(to_x, -1, -1)):
             ch_now = line[pos]
             # ignore tokens of different type (in comments/strings)
-            if find_token_type(ed, pos, to_y)!=type_from:
+            if find_token_type(pos, to_y)!=type_from:
                 continue
             if ch_now==ch:
                 cnt+=1
