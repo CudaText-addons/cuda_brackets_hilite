@@ -1,5 +1,5 @@
 [info]
-title=Brackets Hilite
+title=Bracket Helper
 desc=Highlights pair brackets for caret position, when caret moves. Gives command "Go to pair bracket". Brackets are configurable per lexer or file-extension.
 type=cudatext-plugin
 subdir=cuda_brackets_hilite
@@ -12,21 +12,21 @@ events=on_caret
 
 [item2]
 section=commands
-caption=Brackets Hilite\Go to pair bracket
+caption=Bracket Helper\Go to pair bracket
 method=jump
 
 [item3]
 section=commands
-caption=Brackets Hilite\Select to pair bracket
+caption=Bracket Helper\Select to pair bracket
 method=select
 
 [item4]
 section=commands
-caption=Brackets Hilite\Select to pair bracket, inside
+caption=Bracket Helper\Select to pair bracket, inside
 method=select_in
 
 [item10]
 section=commands
-caption=Brackets Hilite\Config
+caption=Bracket Helper\Config
 method=config
 menu=o
