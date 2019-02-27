@@ -1,4 +1,5 @@
 import cudatext as app
+from .getline import get_line
 
 def find_matching_bracket(ed, from_x, from_y, chars):
     '''
@@ -21,7 +22,7 @@ def find_matching_bracket(ed, from_x, from_y, chars):
                     return t['style']
         return ''
 
-    line = ed.get_text_line(from_y)
+    line = get_line(ed, from_y)
     if line is None: return
     if not from_x in range(len(line)): return
     ch = line[from_x]
@@ -59,7 +60,7 @@ def find_matching_bracket(ed, from_x, from_y, chars):
             to_y+=1
         else:
             to_y-=1
-        line = ed.get_text_line(to_y)
+        line = get_line(ed, to_y)
         if line is None: return
         if down:
             to_x=0

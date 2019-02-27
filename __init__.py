@@ -4,6 +4,7 @@ from cudatext import *
 from cudax_lib import html_color_to_int, int_to_html_color
 from .proc_brackets import *
 from . import opt
+from .getline import get_line
 
 MARKTAG = 10 #uniq value for all markers plugins
 DECORTAG = 10 #uniq value for all decor plugins
@@ -135,7 +136,7 @@ class Command:
             chars = get_chars()
             if not chars: return
 
-            line = ed.get_text_line(y)
+            line = get_line(ed, y)
             if line is None: return
 
             if not 0<=x<len(line):
