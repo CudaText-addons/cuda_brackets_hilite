@@ -198,6 +198,8 @@ class Command:
         if not chars: return
 
         res = find_matching_bracket(ed, x, y, chars)
+        if res is None and x>0:
+            res = find_matching_bracket(ed, x-1, y, chars)
         if res is None:
             msg_status('Cannot find pair bracket')
             return

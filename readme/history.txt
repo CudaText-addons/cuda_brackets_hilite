@@ -1,4 +1,7 @@
 
+2019.08.15
++ add: if caret is after bracket, bracket jumping works too
+
 2019.02.27
 + add: on CudaText 1.76+, plugin skips too long lines (len>1000)
 
