@@ -1,4 +1,9 @@
 
+2019.10.18
+* renamed config file to cuda_bracket_helper.ini (sorry, configure plugin again)
+* removed 2 color options, now syntax-theme item "BracketBG" is used
++ avoid deprecated API
+
 2019.08.15
 + add: if caret is after bracket, bracket jumping works too
 

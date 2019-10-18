@@ -9,7 +9,7 @@ from .getline import get_line
 MARKTAG = 10 #uniq value for all markers plugins
 DECORTAG = 10 #uniq value for all decor plugins
 
-NAME_INI = 'cuda_brackets_hilite_.ini'
+NAME_INI = 'cuda_bracket_helper.ini'
 ini_app = os.path.join(app_path(APP_DIR_SETTINGS), NAME_INI)
 ini_def = os.path.join(os.path.dirname(__file__), NAME_INI)
 
@@ -24,20 +24,14 @@ brackets_lexers = {}
 brackets_types = {}
 
 
-color_char = 0xFF0000
-d = app_proc(PROC_THEME_SYNTAX_DATA_GET, '')
-for i in d:
-    if i['name']=='Symbol':
-        color_char = i['color_font']
-        break
-
-
 def options_load():
 
+    theme = app_proc(PROC_THEME_SYNTAX_DICT_GET, '')
     opt.cannot_use_sel = str_to_bool(ini_read(ini_app, 'op', 'cannot_use_sel', '0'))
     opt.max_lines = int(ini_read(ini_app, 'op', 'max_line_count', str(opt.max_lines)))
-    opt.color_font = html_color_to_int(ini_read(ini_app, 'color', 'fore', '#000000'))
-    opt.color_back = html_color_to_int(ini_read(ini_app, 'color', 'back', '#80c080'))
+    opt.color_char = theme['Symbol']['color_font']
+    opt.color_font = theme['BracketBG']['color_font']
+    opt.color_back = theme['BracketBG']['color_back']
 
 
 def get_chars_filetype():
@@ -99,8 +93,6 @@ class Command:
 
         ini_write(ini_app, 'op', 'cannot_use_sel', bool_to_str(opt.cannot_use_sel))
         ini_write(ini_app, 'op', 'max_line_count', str(opt.max_lines))
-        ini_write(ini_app, 'color', 'fore', int_to_html_color(opt.color_font))
-        ini_write(ini_app, 'color', 'back', int_to_html_color(opt.color_back))
 
         if os.path.isfile(ini_app):
             file_open(ini_app)
@@ -162,10 +154,10 @@ class Command:
             ed.attr(MARKERS_ADD, MARKTAG, x1, y1, 1, opt.color_font, opt.color_back)
 
             if y==y1:
-                ed.decor(DECOR_SET, y, tag=DECORTAG, text=(char1+char2 if x1>x else char2+char1), color=color_char, bold=True, auto_del=True)
+                ed.decor(DECOR_SET, y, tag=DECORTAG, text=(char1+char2 if x1>x else char2+char1), color=opt.color_char, bold=True, auto_del=True)
             else:
-                ed.decor(DECOR_SET, y, tag=DECORTAG, text=char1, color=color_char, bold=True, auto_del=True)
-                ed.decor(DECOR_SET, y1, tag=DECORTAG, text=char2, color=color_char, bold=True, auto_del=True)
+                ed.decor(DECOR_SET, y, tag=DECORTAG, text=char1, color=opt.color_char, bold=True, auto_del=True)
+                ed.decor(DECOR_SET, y1, tag=DECORTAG, text=char2, color=opt.color_char, bold=True, auto_del=True)
 
         finally:
             self.entered=False
