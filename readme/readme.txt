@@ -35,5 +35,5 @@ Config file
   max_line_count (0/1): max count of lines in a file, when plugin work is enabled.
 
 
-Author: Alexey (CudaText)
+Author: Alexey Torgashin (CudaText)
 License: MIT
